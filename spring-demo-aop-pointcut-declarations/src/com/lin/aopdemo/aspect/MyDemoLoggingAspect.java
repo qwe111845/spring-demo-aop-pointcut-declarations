@@ -21,7 +21,8 @@ public class MyDemoLoggingAspect {
 	@Pointcut("execution(* com.lin.aopdemo.*.*.set*(..))")
 	private void setter() {}
 	
-	@Pointcut("forDaoPackage && !(getter() || setter())")
+	// combine pointcut with && || ! 
+	@Pointcut("forDaoPackage() && !(getter() || setter())")
 	private void forDaoPackageNoGetterSetter() {}
 	
 	
@@ -42,7 +43,7 @@ public class MyDemoLoggingAspect {
 		
 	}
 	
-	@Before("forDaoPackage()")
+	@Before("forDaoPackageNoGetterSetter()")
 	public void performApiAnalytics() {
 		
 		System.out.println("=====>>> Performing API analytics");

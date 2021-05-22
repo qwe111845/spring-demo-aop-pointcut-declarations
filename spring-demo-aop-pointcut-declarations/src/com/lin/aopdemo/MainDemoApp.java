@@ -25,6 +25,8 @@ public class MainDemoApp {
 		// call the business method
 		theAccountDAO.addAccount(theAccount);
 		theAccountDAO.doSomething();
+		theAccountDAO.setName("bob");
+		theAccountDAO.getName();
 
 		// call the membership business method
 		theMembershipDAO.add();
