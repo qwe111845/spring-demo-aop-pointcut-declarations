@@ -12,13 +12,13 @@ public class MyDemoLoggingAspect {
 	// this is where we add all of our related advices for logging
 	
 	// reuse a pointcut expression
-	@Pointcut("execution(* com.lin.aopdemo.*.*.*(..))")
+	@Pointcut("execution(* com.lin.aopdemo.c.*.*(..))")
 	private void forDaoPackage() {}
 	
-	@Pointcut("execution(* com.lin.aopdemo.*.*.get*(..))")
+	@Pointcut("execution(* com.lin.aopdemo.c.*.get*(..))")
 	private void getter() {}
 	
-	@Pointcut("execution(* com.lin.aopdemo.*.*.set*(..))")
+	@Pointcut("execution(* com.lin.aopdemo.c.*.set*(..))")
 	private void setter() {}
 	
 	// combine pointcut with && || ! 
@@ -29,26 +29,23 @@ public class MyDemoLoggingAspect {
 	
 	// let's start with an @Before advice
 
-	@Before("forDaoPackageNoGetterSetter()")
+	@Before("com.lin.aopdemo.aspect.MyDemoLoggingAspect.forDaoPackageNoGetterSetter()")
 	public void beforeAddAccountAdvice() {
 		
 		System.out.println("\n=====>>> Executing @Before advice on method");
 		
 	}
 	
-	@Before("forDaoPackage()")
+	@Before("com.lin.aopdemo.aspect.MyDemoLoggingAspect.forDaoPackage()")
 	public void beforeAddAccountAdvicePackage() {
 		
 		System.out.println("\n=====>>> Executing @Before advice on package method");
 		
 	}
 	
-	@Before("forDaoPackageNoGetterSetter()")
-	public void performApiAnalytics() {
-		
-		System.out.println("=====>>> Performing API analytics");
-		
-	}
+
+	
+
 }
 
 
