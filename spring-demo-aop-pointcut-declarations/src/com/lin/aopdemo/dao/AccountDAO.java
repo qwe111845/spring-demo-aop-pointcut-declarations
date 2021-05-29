@@ -66,6 +66,26 @@ public class AccountDAO {
 		return myAccounts;
 		
 	}
+	
+	public List<Account> findAccounts(boolean tripWire) {
+		
+		if (tripWire) {
+			throw new RuntimeException("It's an error message!");
+		}
+		
+		List<Account> myAccounts = new ArrayList<Account>();
+		
+		Account temp1 = new Account("test1", "Lv1");
+		Account temp2 = new Account("test2", "Lv2");
+		Account temp3 = new Account("test3", "Lv3");
+		
+		myAccounts.add(temp1);
+		myAccounts.add(temp2);
+		myAccounts.add(temp3);
+        
+		return myAccounts;
+		
+	}
     
     
 }
