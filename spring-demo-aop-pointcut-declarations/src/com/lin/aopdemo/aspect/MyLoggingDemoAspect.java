@@ -30,8 +30,23 @@ public class MyLoggingDemoAspect {
 		
 		System.out.println("Result is:" + result);
 		
+		
+		convertAccountNamesToUpperCase(result);
+		
 	}
 	
+	private void convertAccountNamesToUpperCase(List<Account> result) {
+		
+		for(Account tempAccount: result) {
+			
+			String theUpperName = tempAccount.getName().toUpperCase();
+			
+			// update the acount name to uppercase
+			tempAccount.setName(theUpperName);
+		}
+        		
+	}
+
 	// let's start with an @Before advice
 
 	@Before("com.lin.aopdemo.aspect.LinAopExpressions.forDaoPackageNoGetterSetter()")
