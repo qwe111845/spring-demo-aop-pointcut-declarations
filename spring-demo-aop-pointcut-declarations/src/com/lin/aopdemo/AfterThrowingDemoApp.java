@@ -24,7 +24,7 @@ public class AfterThrowingDemoApp {
 			boolean tripWire = true;
 			theAccounts = theAccountDAO.findAccounts(tripWire);
 		} catch (Exception exe) {
-			System.out.println("\n Main Program: Exception");
+			System.out.println("\n Main Program: " + exe.toString());
 		}
 		
 		System.out.println("\n\n Main Program:AfterReturningDemoApp");
