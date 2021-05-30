@@ -26,5 +26,16 @@ public class TrafficFortuneService {
 		return "Except heavy traffic this morning";
 
 	}
+	
+	// just make an error
+    public String getFortune(boolean tripWire) {
+		
+    	if (tripWire) {
+    		throw new RuntimeException("getFortune runtime error");
+    	}
+		
+		return getFortune();
+
+	}
 
 }

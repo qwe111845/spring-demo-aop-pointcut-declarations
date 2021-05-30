@@ -1,4 +1,4 @@
-  package com.lin.aopdemo.aspect;
+package com.lin.aopdemo.aspect;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,13 +11,11 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.lin.aopdemo.Account;
-import com.lin.aopdemo.AroundWithLoggerDemoApp;
 
 @Aspect
 @Component
@@ -28,7 +26,7 @@ public class MyLoggingDemoAspect {
 			Logger.getLogger(MyLoggingDemoAspect.class.getName());
 
 	
-	@Around("execution(* com.lin.aopdemo.service.*.*(..))")
+	@Around("execution(* com.lin.aopdemo.service.*.getFortune(..))")
 	public Object aroundGetFortuneAdvice(
 			ProceedingJoinPoint theProceedingJoinPoint) throws Throwable{
 		
@@ -40,8 +38,16 @@ public class MyLoggingDemoAspect {
 		long begin = System.currentTimeMillis();
 		
 		// execute the method
-		Object result = theProceedingJoinPoint.proceed();
-		
+		Object result = null;
+		try {
+		    result = theProceedingJoinPoint.proceed();
+		} catch (Exception e){
+			// log the exception
+			myLogger.warning(e.getMessage());
+			
+			throw e;
+			// result = "error message at aroud advice";
+		}
 		// end time stamp
 		long end = System.currentTimeMillis();
 		
