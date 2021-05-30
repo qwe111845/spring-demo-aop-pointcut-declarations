@@ -29,7 +29,7 @@ public class MyLoggingDemoAspect {
 
 	
 	@Around("execution(* com.lin.aopdemo.service.*.*(..))")
-	public Object aroundFindAccountsAdvice(
+	public Object aroundGetFortuneAdvice(
 			ProceedingJoinPoint theProceedingJoinPoint) throws Throwable{
 		
 		// print out method we are advising on
