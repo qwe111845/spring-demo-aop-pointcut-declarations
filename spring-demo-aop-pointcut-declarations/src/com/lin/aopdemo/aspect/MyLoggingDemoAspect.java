@@ -3,8 +3,11 @@
 import java.util.List;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -18,6 +21,30 @@ import com.lin.aopdemo.Account;
 @Component
 @Order(2)
 public class MyLoggingDemoAspect {
+	
+	@Around("execution(* com.lin.aopdemo.service.*.*(..))")
+	public Object aroundFindAccountsAdvice(
+			ProceedingJoinPoint theProceedingJoinPoint) throws Throwable{
+		
+		// print out method we are advising on
+		String method = theProceedingJoinPoint.getSignature().toShortString();
+		System.out.println("\n========> Excuting @Around on method: " + method);
+		
+		// get begin time stamp
+		long begin = System.currentTimeMillis();
+		
+		// execute the method
+		Object result = theProceedingJoinPoint.proceed();
+		
+		// end time stamp
+		long end = System.currentTimeMillis();
+		
+		long duration = end - begin;
+		System.out.println("\n========> Duration: " + duration / 1000.0 + " seconds");
+		
+		return result;
+						
+	}
 	
 	// add a new advice for @AfterReturning on the findAccounts method
 	
@@ -49,16 +76,12 @@ public class MyLoggingDemoAspect {
 				
 	}
 	
-	private void convertAccountNamesToUpperCase(List<Account> result) {
+	@After("execution(* com.lin.aopdemo.dao.AccountDAO.findAccounts(..))")
+	public void afterFinallyFindAccountsAdvice(JoinPoint theJoinPoint) {
 		
-		for(Account tempAccount: result) {
-			
-			String theUpperName = tempAccount.getName().toUpperCase();
-			
-			// update the acount name to uppercase
-			tempAccount.setName(theUpperName);
-		}
-        		
+		String method = theJoinPoint.getSignature().toShortString();
+		System.out.println("\n========> Excuting @After on method: " + method);
+						
 	}
 
 	// let's start with an @Before advice
@@ -86,6 +109,18 @@ public class MyLoggingDemoAspect {
 			}
 		}
 		
+	}
+	
+	private void convertAccountNamesToUpperCase(List<Account> result) {
+		
+		for(Account tempAccount: result) {
+			
+			String theUpperName = tempAccount.getName().toUpperCase();
+			
+			// update the acount name to uppercase
+			tempAccount.setName(theUpperName);
+		}
+        		
 	}
 
 }
